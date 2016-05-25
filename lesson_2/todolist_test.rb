@@ -10,6 +10,7 @@ class TodoListTest < MiniTest::Test
     @todo1 = Todo.new("Buy milk")
     @todo2 = Todo.new("Clean room")
     @todo3 = Todo.new("Go to gym")
+    @todo4 = Todo.new("Walk the dog")
     @todos = [@todo1, @todo2, @todo3]
 
     @list = TodoList.new("Today's Todos")
@@ -46,5 +47,24 @@ class TodoListTest < MiniTest::Test
     todo = @list.pop
     assert_equal(@todo3, todo)
     assert_equal([@todo1, @todo2], @list.to_a)
+  end
+
+  def test_done?
+    assert_equal(false, @todo1.done)
+    assert_equal(false, @todo2.done)
+    assert_equal(false, @todo3.done)
+  end
+
+  def test_TypeError
+    assert_raises(TypeError) { @list << "something" }
+    assert_raises(TypeError) { @list.add(1) }
+  end
+
+  def test_shovel
+    new_todo = Todo.new("Walk the dog")
+    @list.add(new_todo)
+    todos = @todos << new_todo
+
+    assert_equal(todos, @list.to_a)
   end
 end
